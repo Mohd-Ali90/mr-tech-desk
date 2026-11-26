@@ -113,8 +113,28 @@ http://localhost:5173
 | `/products/:productId/edit` | Edit product      | Owner or admin |
 | `*`                         | Not-found page    | Public         |
 
+### ERD
+
+![ERD Diagram](image-1.png)
+
 
 ## User Stories
+1. As a Technicain or Customer , I should be able to create a support ticket.
+2. As a Technician, I should be able to view all support tickets.
+3. As a customer, I should only be able to view my related support ticket(s).
+4. As a Techincian , I should be able to verify / approve a ticket for further action.
+5. As a technician , I should be able to close a ticket.
+6. As a Technician , I should be able to edit a ticket.
+7. As a Technician, I should be able to delete a ticket.
+8. As an Admin I should be able to assign roles accordingly , whether it is a Technician or a Customer.
+9. As a Technician or Customer, I should be able to post a reply on a ticket.
+10. As a Technician or Customer , I should be able to delete my replies.
+11. As a Customer , I should be able to post a link to supporting evidence (image or diag file).
+12. As a Technician , I should be able to set the priority of the issue.
+13. As a Customer , I should be able to specify the affected device/system.
+14. As a Customer, I should be able to fill out problem title and summary fields.
+15. As a customer, I should be able to fill out contact details.
+16. As a Technician or Customer , I should be able to see the time and date that the ticket was created.
 
 
 ## Future Enhancements
