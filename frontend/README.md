@@ -115,7 +115,7 @@ http://localhost:5173
 
 ### ERD
 
-![ERD Diagram](image-1.png)
+![ERD diagram](image-2.png)
 
 
 ## User Stories
