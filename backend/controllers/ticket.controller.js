@@ -23,7 +23,7 @@ res.status(201).json(newTicket)
 
 async function getAllTickets(req,res){
     try {
-    const allTickets = await Ticket.Find().populate('author')
+    const allTickets = await Ticket.find().populate('author')
     res.status(200).json(allTickets)
     }catch(err){
     console.log(err)
@@ -36,6 +36,7 @@ async function getOneTicket(req,res){
    if(!oneTicket){
      return res.status(404).json({message:'Ticket Not Found.'})
    }
+   res.status(200).json({ticket:oneTicket})
     }catch(err){
    console.log(err)
     }
@@ -43,7 +44,7 @@ async function getOneTicket(req,res){
 
 async function updateOneTicket(req,res){
 try{
-const foundTicket = await Ticket.findById(req.params.TicketId)
+const foundTicket = await Ticket.findById(req.params.ticketId)
 
 if(!foundTicket){
     return res.status(404).json({message:'Ticket Not Found.'})
@@ -72,18 +73,19 @@ console.log(err)
 
 async function deleteOneTicket(req,res){
     try{
-    const foundTicket = await Ticket.findById(req.params.ticketId)
+        const foundTicket = await Ticket.findById(req.params.ticketId)
 
-    if(!foundTicket){
-        return res.status(404).json({message:'Ticket Not Found.'})
-    }
-     
-    if (!foundTicket.author.equals(req.user._id)){
-        return res.status(403).json({message:'You Are Not Permitted to Delete This Ticket'})
-    }
-  const deletedTicket = await Ticket.findByIdAndDelete(req.params.ticketId)
-  res.status(204)
+        if(!foundTicket){
+            return res.status(404).json({message:'Ticket Not Found.'})
+        }
 
+        if(!foundTicket.author.equals(req.user._id)){
+            return res.status(403).json({message:'You Are Not Permitted to Delete This Ticket.'})
+        }
+
+        const deletedTicket = await Ticket.findByIdAndDelete(req.params.ticketId)
+
+        res.sendStatus(204)
     }catch(err){
         console.log(err)
     }
