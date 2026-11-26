@@ -12,3 +12,4 @@ router.put('/:ticketId', verifyToken , ticketController.updateOneTicket)
 
 router.delete('/:ticketId', verifyToken, ticketController.deleteOneTicket)
 
+module.exports = router
