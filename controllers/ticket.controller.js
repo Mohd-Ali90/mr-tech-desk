@@ -1,4 +1,5 @@
 const Ticket = require('../models/Ticket')
+const Reply = require('../models/Reply')
 
 async function createTicket(req,res){
     try{
@@ -91,10 +92,24 @@ async function deleteOneTicket(req,res){
     }
 }
 
+async function createOneReply(req,res){
+    try{
+    const createdReply = await Reply.create({
+        text:req.body.text,
+        author: req.user_id,
+        ticket: req.params.ticketId
+    })
+    res.status(200).json(createdReply)
+    }catch(err){
+    console.log(err)
+    }
+}
+
 module.exports = {
     createTicket,
     getAllTickets,
     getOneTicket,
     updateOneTicket,
-    deleteOneTicket
+    deleteOneTicket,
+    createOneReply
 }
