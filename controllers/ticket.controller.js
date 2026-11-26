@@ -1,4 +1,5 @@
 const Ticket = require('../models/Ticket')
+const Reply = require('../models/Reply')
 
 async function createTicket(req,res){
     try{
@@ -36,7 +37,8 @@ async function getOneTicket(req,res){
    if(!oneTicket){
      return res.status(404).json({message:'Ticket Not Found.'})
    }
-   res.status(200).json({ticket:oneTicket})
+   const replies = await Reply.find({ticket: req.params.ticketId}).populate('author')
+   res.status(200).json({ticket:oneTicket, replies: replies})
     }catch(err){
    console.log(err)
     }
@@ -91,12 +93,43 @@ async function deleteOneTicket(req,res){
     }
 }
 
+async function createOneReply(req,res){
+    try{
+    const createdReply = await Reply.create({
+        text:req.body.text,
+        author: req.user._id,
+        ticket: req.params.ticketId
+    })
+    res.status(200).json(createdReply)
+    }catch(err){
+    console.log(err)
+    }
+}
+
+async function deleteOneReply(req,res){
+    try{
+     const foundReply = await Reply.findById(req.params.replyId)
+     if(!foundReply){
+       return res.status(404).json({message:'Reply Not Found.'})
+     }
+  
+   if(!foundReply.author.equals(req.user._id)){
+    return res.status(403).json({message:'You Are Not Permitted to Delete This Reply.'})
+   }
+
+   const deletedReply = await Reply.findByIdAndDelete(req.params.replyId)
+   res.sendStatus(204)
+    }catch(err){
+    console.log(err)
+    }
+}
+
 module.exports = {
     createTicket,
     getAllTickets,
     getOneTicket,
     updateOneTicket,
-    deleteOneTicket
+    deleteOneTicket,
+    createOneReply,
+    deleteOneReply
 }
-
-// comment for update purposes
