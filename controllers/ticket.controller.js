@@ -37,7 +37,8 @@ async function getOneTicket(req,res){
    if(!oneTicket){
      return res.status(404).json({message:'Ticket Not Found.'})
    }
-   res.status(200).json({ticket:oneTicket})
+   const replies = await Reply.find({ticket: req.params.ticketId}).populate('author')
+   res.status(200).json({ticket:oneTicket, replies: replies})
     }catch(err){
    console.log(err)
     }
