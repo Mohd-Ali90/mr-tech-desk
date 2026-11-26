@@ -14,4 +14,7 @@ router.delete('/:ticketId', verifyToken, ticketController.deleteOneTicket)
 
 router.post('/:ticketId/replies', verifyToken, ticketController.createOneReply)
 
+
+router.delete('/:ticketId/replies/:replyId', verifyToken, ticketController.deleteOneReply)
+
 module.exports = router

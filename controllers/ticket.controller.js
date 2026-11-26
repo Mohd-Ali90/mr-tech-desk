@@ -97,10 +97,28 @@ async function createOneReply(req,res){
     try{
     const createdReply = await Reply.create({
         text:req.body.text,
-        author: req.user_id,
+        author: req.user._id,
         ticket: req.params.ticketId
     })
     res.status(200).json(createdReply)
+    }catch(err){
+    console.log(err)
+    }
+}
+
+async function deleteOneReply(req,res){
+    try{
+     const foundReply = await Reply.findById(req.params.replyId)
+     if(!foundReply){
+       return res.status(404).json({message:'Reply Not Found.'})
+     }
+  
+   if(!foundReply.author.equals(req.user._id)){
+    return res.status(403).json({message:'You Are Not Permitted to Delete This Reply.'})
+   }
+
+   const deletedReply = await Reply.findByIdAndDelete(req.params.replyId)
+   res.sendStatus(204)
     }catch(err){
     console.log(err)
     }
@@ -112,5 +130,6 @@ module.exports = {
     getOneTicket,
     updateOneTicket,
     deleteOneTicket,
-    createOneReply
+    createOneReply,
+    deleteOneReply
 }
