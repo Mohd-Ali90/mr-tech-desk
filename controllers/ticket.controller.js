@@ -98,5 +98,3 @@ module.exports = {
     updateOneTicket,
     deleteOneTicket
 }
-
-// comment for update purposes
