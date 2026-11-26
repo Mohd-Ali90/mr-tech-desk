@@ -34,7 +34,7 @@ async function getOneTicket(req,res){
     try{
    const oneTicket= await Ticket.findById(req.params.ticketId).populate('author')
    if(!oneTicket){
-     return res.status.(404).json({message:'Ticket Not Found.'})
+     return res.status(404).json({message:'Ticket Not Found.'})
    }
     }catch(err){
    console.log(err)
@@ -81,7 +81,7 @@ async function deleteOneTicket(req,res){
     if (!foundTicket.author.equals(req.user._id)){
         return res.status(403).json({message:'You Are Not Permitted to Delete This Ticket'})
     }
-  const deleteTicket = await Ticket.findByIdAndDelete(req.params.ticketId)
+  const deletedTicket = await Ticket.findByIdAndDelete(req.params.ticketId)
   res.status(204)
 
     }catch(err){
